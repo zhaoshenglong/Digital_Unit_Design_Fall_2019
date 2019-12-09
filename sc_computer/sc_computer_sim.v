@@ -13,7 +13,7 @@
 
 
 // `timescale 10ns/10ns            // 仿真时间单位/时间精度
-`timescale 1ps/1ps            // 仿真时间单位/时间精度
+`timescale 1us/1us            // 仿真时间单位/时间精度
 
 //
 // （1）仿真时间单位/时间精度：数字必须为1、10、100
@@ -28,7 +28,7 @@ module sc_computer_sim;
     reg           resetn_sim;
     reg           clock_50M_sim;
 	 reg           mem_clk_sim;
-	 reg    [9:0] sw;
+	 reg    [9:0] sw_sim;
 
     wire   [6:0]  hex0_sim,hex1_sim,hex2_sim,hex3_sim,hex4_sim,hex5_sim;
 	 wire          led0_sim,led1_sim,led2_sim,led3_sim;
@@ -47,30 +47,7 @@ module sc_computer_sim;
 	 
     sc_computer_main    sc_computer_instance (resetn_sim, clock_50M_sim, mem_clk_sim, pc_sim, inst_sim, aluout_sim, memout_sim,
 	                                      imem_clk_sim, dmem_clk_sim, sw_sim, hex0_sim, hex1_sim, hex2_sim, hex3_sim, hex4_sim, hex5_sim,
-													  mem_dataout_sim, io_read_data_sim );
-
-// module sc_computer (resetn,clock,mem_clk,pc,inst,aluout,memout,imem_clk,dmem_clk,out_port0,out_port1,in_port0,in_port1,mem_dataout,data,io_read_data);
-
-/* input resetn,clock,mem_clk;
-   
-   input [31:0] in_port0,in_port1;
-   
-   output [31:0] pc,inst,aluout,memout;
-   output        imem_clk,dmem_clk;
-   output [31:0] out_port0,out_port1;
-   output [31:0] mem_dataout;            // to check data_mem output
-   output [31:0] data;
-   output [31:0] io_read_data;
-   
-   wire   [31:0] data;
-   wire          wmem;   // connect the cpu and dmem. 
-*/
-
-
-
-
-										
-						
+													  mem_dataout_sim, io_read_data_sim );			
 	 initial
         begin
             clock_50M_sim = 1;
@@ -96,16 +73,20 @@ module sc_computer_sim;
                 #5 resetn_sim = 1;
         end
 	 
-	 initial
+	 always 
 	     begin
-				sw = 10'b0000110000;
+				sw_sim = 10'b0000110000;
+                # 40;
+                sw_sim = 10'b1111100001;
+                # 40;
 		  end
 
 		  
-    initial
+    always
         begin
-		  
+          # 20;
           $display($time,"resetn=%b clock_50M=%b  mem_clk =%b", resetn_sim, clock_50M_sim, mem_clk_sim);
+          $display($time,"sw=%b hex0=%b hex1=%b  hex2=%b hex3=%b hex4=%b hex5=%b",sw_sim, hex0_sim, hex1_sim, hex2_sim, hex3_sim, hex4_sim, hex5_sim);
         end
 
 endmodule 

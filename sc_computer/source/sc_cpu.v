@@ -17,9 +17,6 @@ module sc_cpu (clock,resetn,inst,mem,pc,wmem,alu,data);
    wire [31:0]   offset = {imm[13:0],inst[15:0],1'b0,1'b0};   //offset(include sign extend)
    dff32 ip (npc,clock,resetn,pc);  // define a D-register for PC
    
-   // cla32 pcplus4 (pc,32¡¯h4, 1¡¯b0,p4);
-   // cla32 br_adr (p4,offset,1¡¯b0,adr);
-   
    assign p4 = pc + 32'h4;       // modified
    assign adr = p4 + offset;     // modified
    
