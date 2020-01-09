@@ -17,7 +17,8 @@ module alu (a,b,aluc,s,z);
              4'b0011: s = b << a;             //0011 SLL: rd <- (rt << sa)
              4'b0111: s = b >> a;             //0111 SRL: rd <- (rt >> sa) (logical)
              4'b1111: s = $signed(b) >>> a;   //1111 SRA: rd <- (rt >> sa) (arithmetic)
-             default: s = 0;
+             4'b1011: s = a > b ? 1'b1: 1'b0; 
+				 default: s = 1;
          endcase
          if (s == 0 )  z = 1;
             else z = 0;         
