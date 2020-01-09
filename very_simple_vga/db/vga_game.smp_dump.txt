@@ -1,0 +1,7 @@
+
+State Machine - |vga_main|cur_direction
+Name cur_direction.DOWN cur_direction.UP cur_direction.LEFT cur_direction.RIGHT 
+cur_direction.RIGHT 0 0 0 0 
+cur_direction.LEFT 0 0 1 1 
+cur_direction.UP 0 1 0 1 
+cur_direction.DOWN 1 0 0 1 

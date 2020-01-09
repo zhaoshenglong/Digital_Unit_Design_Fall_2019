@@ -62,8 +62,8 @@ module pipeid( mwreg,mrn,ern,ewreg,em2reg,mm2reg,dpc4,inst,
    wire i_j    = ~dop[5] & ~dop[4] & ~dop[3] & ~dop[2] &  dop[1] & ~dop[0]; //000010
    wire i_jal  = ~dop[5] & ~dop[4] & ~dop[3] & ~dop[2] &  dop[1] &  dop[0]; //000011
 	
-	// 读取/写寄存器，使用和pipeline同一个clock
-	regfile reg_read_write (drs, drt, wdi, wrn, wwreg, clock, resetn, dq1, dq2);
+	// 读取/写寄存器，使用和pipeline反相clock
+	regfile reg_read_write (drs, drt, wdi, wrn, wwreg, ~clock, resetn, dq1, dq2);
 	
 	// choose forwarding signal
 	always @ * begin
