@@ -42,7 +42,12 @@ module io_output_reg (addr,datain,write_io_enable,io_clk, hex0,hex1, hex2,hex3,h
 	
 	output [6:0] hex0,hex1,hex2,hex3,hex4,hex5;
 	reg[3:0] operand_left_high, operand_left_low, operand_right_high, operand_right_low, result_high, result_low;
-	sevenseg LED8_operand_left_low ( operand_left_low, hex5 );
+	sevenseg LED8_result_high ( result_high, hex1 );
+	sevenseg LED8_result_low ( result_low, hex0 );
+	sevenseg LED8_operand_right_high ( operand_right_high, hex3 );
+	sevenseg LED8_operand_right_low ( operand_right_low, hex2 );
+	sevenseg LED8_operand_left_high ( operand_left_high, hex5 );
+	sevenseg LED8_operand_left_low ( operand_left_low, hex4 );
 
 	always @(posedge io_clk)
 		begin
@@ -79,8 +84,9 @@ module io_input_reg (addr,io_clk,io_read_data,sw);
 	io_input_mux io_imput_mux2x32(in_reg0,in_reg1,addr[7:2],io_read_data);
 	always @(posedge io_clk) 
 	begin
-	 in_reg0 <= {24'b0, sw[9:2]};// 输入端口在 io_clk 上升沿时进行数据锁存
-	 in_reg1 <= 32'h000000a0;// 输入端口在 io_clk 上升沿时进行数据锁存
+	 in_reg0 <= {27'b0, sw[4:0]}; // 输入端口在 io_clk 上升沿时进行数据锁存
+	 in_reg1 <= {27'b0, sw[9:5]}; // 输入端口在 io_clk 上升沿时进行数据锁存
+
 	 end
 endmodule 
 
